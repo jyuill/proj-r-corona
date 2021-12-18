@@ -1,0 +1,58 @@
+---
+title: "Covid 19 in Canada"
+author: "`r Sys.getenv('USER')`"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    toc: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE,
+                      message=FALSE,
+                      warning=FALSE,
+                      fig.height=3.5,
+                      fig.width=6)
+
+library(tidyverse)
+library(lubridate)
+library(here)
+library(PerformanceAnalytics)
+library(plotly)
+library(scales)
+library(gridExtra)
+library(DT)
+
+```
+
+## Covid Trends in Canada {.tabset}
+
+Covid trends in Canada from official source, updated daily at 19:00 ET:
+
+* [Public Data Site](https://open.canada.ca/data/en/dataset/261c32ab-4cfd-4f81-9dea-7b64065690dc)
+* [Data Set](https://health-infobase.canada.ca/src/data/covidLive/covid19-download.csv)
+* [Data definitions](https://health-infobase.canada.ca/src/data/covidLive/covid19-data-dictionary.csv)
+
+### Data
+
+Data summary:
+
+```{r }
+## refresh data if not done recently
+covid_bu <- read_csv('data/covid-canada.csv')
+## if file is not newer than 4pm PT yesterday, refresh
+if(file.info('data/covid-canada.csv')$mtime<Sys.time()-(60*60*24)){
+  covid <- read_csv('https://health-infobase.canada.ca/src/data/covidLive/covid19-download.csv')
+  write_csv(covid, 'data/covid-canada.csv')
+}
+covid <- read_csv('data/covid-canada.csv')
+summary(covid[,c('date','numconf','numtoday','numdeaths','numdeathstoday')])
+```
+
+### Plots
+
+You can also embed plots, for example:
+
+```{r pressure}
+plot(pressure)
+```
