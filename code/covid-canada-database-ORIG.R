@@ -1,4 +1,4 @@
-## WRITE covid data ta MySQL database
+## ORIGINAL EXPLORATION / TESTING WRITE covid data ta MySQL database
 
 library(tidyverse)
 library(RMariaDB)

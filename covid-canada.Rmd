@@ -39,12 +39,7 @@ Data summary:
 
 ```{r }
 ## refresh data if not done recently
-covid_bu <- read_csv('data/covid-canada.csv')
-## if file is not newer than 4pm PT yesterday, refresh
-if(file.info('data/covid-canada.csv')$mtime<Sys.time()-(60*60*24)){
-  covid <- read_csv('https://health-infobase.canada.ca/src/data/covidLive/covid19-download.csv')
-  write_csv(covid, 'data/covid-canada.csv')
-}
+source('code/covid-canada-data-update.R')
 covid <- read_csv('data/covid-canada.csv')
 summary(covid[,c('date','numconf','numtoday','numdeaths','numdeathstoday')])
 ```

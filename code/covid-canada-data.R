@@ -1,5 +1,6 @@
 ## Get Covid 19 data for Canada - updated daily
-## covid-canada.Rmd also has code for collecting data from same source
+## PRODUCTION source: code/covid-canada-data-update.R
+## this for exploratory only
 library(tidyverse)
 library(plotly)
 
