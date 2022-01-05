@@ -49,10 +49,10 @@ covid <- read_csv('data/covid-canada.csv')
 summary(covid[,c('date','numconf','numtoday','numdeaths','numdeathstoday')])
 ```
 
-### Plots
+### Totals
 
-You can also embed plots, for example:
+Totals across Canada
 
 ```{r pressure}
-plot(pressure)
+covid %>% 
 ```

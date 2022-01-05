@@ -1,4 +1,5 @@
-
+## Get Covid 19 data for Canada - updated daily
+## covid-canada.Rmd also has code for collecting data from same source
 library(tidyverse)
 library(plotly)
 
@@ -13,7 +14,9 @@ summary(covid)
 
 ## check metrics
 ## is numconf same as numtotal? YES
-covid %>% filter(prname=='Canada' & date>='2021-11-01') %>% 
+## set start date for recent data
+date_st <- Sys.Date()-14
+covid %>% filter(prname=='Canada' & date>=date_st) %>% 
   select(prname, date, numconf, numtotal) %>%
   pivot_longer(cols=c(numconf, numtotal), names_to='metric', values_to='number') %>% 
   ggplot(aes(x=date, y=number, fill=metric))+
@@ -21,7 +24,7 @@ covid %>% filter(prname=='Canada' & date>='2021-11-01') %>%
   geom_col(aes(y=number), position=position_dodge2())
 
 ## is percentoday increase in cases over previous day? cumulative? NO
-covid %>% filter(prname=='Canada' & date>='2021-11-01') %>% 
+covid %>% filter(prname=='Canada' & date>=date_st) %>% 
   select(prname, date, numconf, numtoday, percentoday) %>% 
   mutate(num_conf_pc_chg=round((numconf/lag(numconf)-1)*100, digits=2), ## YES
          numtoday_pc_chg=round((numtoday/lag(numtoday)-1)*100, digits=2), ## NO
